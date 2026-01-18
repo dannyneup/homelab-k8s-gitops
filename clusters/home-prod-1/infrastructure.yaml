@@ -2,35 +2,43 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: infrastructure-sources
+  name: sources
   namespace: flux-system
 spec:
-  interval: 10m0s
-  timeout: 5m0s
   path: ./infrastructure/sources
-  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
+  prune: true
   wait: true
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: infrastructure-metallb
+  name: metallb-crds
   namespace: flux-system
 spec:
   dependsOn: 
-    - name: infrastructure-sources
-  interval: 10m0s
-  timeout: 5m0s
-  path: ./infrastructure/metallb
+    - name: sources
+  path: .charts/metallb/charts/crds
+  sourceRef:
+    kind: GitRepository
+    name: metallb
   prune: true
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: metallb
+  namespace: flux-system
+spec:
+  dependsOn: 
+    - name: sources
+    - name: metallb-crds
+  path: ./infrastructure/metallb
   sourceRef:
     kind: GitRepository
     name: flux-system
+  prune: true
   wait: true
-  healthChecks:
-    - apiVersion: apiextensions.k8s.io/v1
-      kind: CustomResourceDefinition
-      name: ipaddresspools.metallb.io

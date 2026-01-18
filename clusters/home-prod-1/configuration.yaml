@@ -8,13 +8,9 @@ spec:
   dependsOn:
       - name: infrastructure-sources
       - name: infrastructure-metallb
-  interval: 10m0s
-  timeout: 5m0s
   path: ./clusters/home-prod-1/configuration/infrastructure/metallb
-  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
-  retryInterval: 1m0s
+  prune: true
   wait: true
----

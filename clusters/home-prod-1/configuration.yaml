@@ -6,8 +6,8 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn:
-      - name: infrastructure-sources
-      - name: infrastructure-metallb
+      - name: metallb-crds
+      - name: metallb
   path: ./clusters/home-prod-1/configuration/infrastructure/metallb
   sourceRef:
     kind: GitRepository

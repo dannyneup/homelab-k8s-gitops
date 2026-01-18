@@ -14,3 +14,21 @@ spec:
     name: flux-system
   retryInterval: 1m0s
   wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: infrastructure-metallb
+  namespace: flux-system
+spec:
+  dependsOn: 
+    - infrastructure-sources
+  interval: 10m0s
+  timeout: 5m0s
+  path: ./infrastructure/metallb
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  retryInterval: 1m0s
+  wait: true

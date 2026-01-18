@@ -2,12 +2,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: cluster-configuraion
+  name: metallb-configuraion
   namespace: flux-system
 spec:
+  dependsOn:
+      - name: infrastructure-sources
+      - name: infrastructure-metallb
   interval: 10m0s
   timeout: 5m0s
-  path: ./clusters/home-prod-1/configuration
+  path: ./clusters/home-prod-1/configuration/infrastructure/metallb
   prune: true
   sourceRef:
     kind: GitRepository

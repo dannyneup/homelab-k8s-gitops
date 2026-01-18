@@ -22,7 +22,7 @@ metadata:
   namespace: flux-system
 spec:
   dependsOn: 
-    - infrastructure-sources
+    - name: infrastructure-sources
   interval: 10m0s
   timeout: 5m0s
   path: ./infrastructure/metallb

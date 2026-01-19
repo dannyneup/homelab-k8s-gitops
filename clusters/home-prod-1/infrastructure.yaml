@@ -21,7 +21,7 @@ metadata:
 spec:
   dependsOn: 
     - name: sources
-  path: .charts/metallb/charts/crds
+  path: .config/crd
   sourceRef:
     kind: GitRepository
     name: metallb

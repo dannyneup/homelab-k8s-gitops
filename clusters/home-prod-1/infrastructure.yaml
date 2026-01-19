@@ -21,7 +21,7 @@ metadata:
 spec:
   dependsOn: 
     - name: sources
-  path: .config/crd
+  path: ./config/crd
   sourceRef:
     kind: GitRepository
     name: metallb

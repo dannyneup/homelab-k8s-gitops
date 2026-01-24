@@ -16,3 +16,6 @@ spec:
   values:
     controller:
       loglevel: info
+    speaker:
+      frr:
+        enabled: false

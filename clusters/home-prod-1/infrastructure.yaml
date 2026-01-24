@@ -84,6 +84,7 @@ metadata:
 spec:
   dependsOn:
     - name: rook-ceph
+    - name: metallb-configuration
   path: ./infrastructure/rook-ceph/cluster
   sourceRef:
     kind: GitRepository

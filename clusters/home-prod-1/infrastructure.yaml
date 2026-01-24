@@ -49,9 +49,25 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
+  name: rook-ceph-base
+  namespace: flux-system
+spec:
+  path: ./infrastructure/rook-ceph
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  interval: 10m
+  prune: true
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
   name: rook-ceph
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: rook-ceph-base
   path: ./infrastructure/rook-ceph/operator
   sourceRef:
     kind: GitRepository

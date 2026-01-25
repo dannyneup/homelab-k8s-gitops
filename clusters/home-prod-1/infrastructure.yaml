@@ -79,11 +79,11 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: rook-ceph
+  name: rook-ceph-cluster
   namespace: flux-system
 spec:
   dependsOn:
-    - name: rook-ceph-base
+    - name: rook-ceph
   path: ./infrastructure/rook-ceph/cluster
   sourceRef:
     kind: GitRepository

@@ -1,0 +1,67 @@
+apiVersion: ceph.rook.io/v1
+kind: CephCluster
+metadata:
+  name: rook-ceph
+  namespace: rook-ceph
+spec:
+  dataDirHostPath: /var/lib/rook
+  mon:
+    count: 3
+    allowMultiplePerNode: false
+  mgr:
+    count: 2
+    allowMultiplePerNode: false
+    modules:
+      - name: pg_autoscaler
+        enabled: true
+  dashboard:
+    enabled: true
+    ssl: false
+  crashCollector:
+    disable: false
+  resources:
+    mgr:
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
+      requests:
+        cpu: "200m"
+        memory: "512Mi"
+    osd:
+      limits:
+        cpu: "1000m"
+        memory: "2Gi"
+      requests:
+        cpu: "250m"
+        memory: "2Gi"
+    mon:
+      limits:
+        cpu: "500m"
+        memory: "1Gi"
+      requests:
+        cpu: "200m"
+        memory: "1Gi"
+    prepareosd:
+      requests:
+        cpu: "200m"
+        memory: "50Mi"
+      limits:
+        cpu: "500m"
+        memory: "200Mi"
+  storage:
+    useAllNodes: true
+    useAllDevices: false
+    deviceFilter: "^/dev/sdb$"
+    config:
+      osdsPerDevice: "1"
+      storeType: bluestore
+      databaseSizeMB: "1024"
+      deviceClass: "nvme"
+  priorityClassNames:
+    mon: system-node-critical
+    osd: system-node-critical
+    mgr: system-cluster-critical
+  disruptionManagement:
+    managePodBudgets: true
+    osdMaintenanceTimeout: 30
+    pgHealthCheckTimeout: 0

@@ -1,0 +1,16 @@
+apiVersion: ceph.rook.io/v1
+kind: CephBlockPool
+metadata:
+  name: nvme-replica-pool
+  namespace: rook-ceph
+spec:
+  failureDomain: host
+  replicated:
+    size: 3
+    requireSafeReplicaSize: true
+  deviceClass: nvme
+  parameters:
+    compression_mode: passive
+    compression_algorithm: snappy
+    compression_required_ratio: "0.875"
+    compression_min_blob_size: "4096"

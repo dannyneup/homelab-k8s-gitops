@@ -1,7 +1,7 @@
 apiVersion: ceph.rook.io/v1
 kind: CephBlockPool
 metadata:
-  name: nvme-replica-pool
+  name: nvme-replica-compression
   namespace: rook-ceph
 spec:
   failureDomain: host

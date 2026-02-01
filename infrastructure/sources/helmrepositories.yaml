@@ -15,3 +15,12 @@ metadata:
 spec:
   interval: 1h
   url: https://charts.rook.io/release
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: hashicorp
+  namespace: flux-system
+spec:
+  interval: 1h
+  url: https://helm.releases.hashicorp.com

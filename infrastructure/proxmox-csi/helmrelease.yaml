@@ -1,0 +1,30 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: proxmox-csi-plugin
+  # namespace and the config secret are created by talos (inlineManifests in homelab-infrastructure)
+  namespace: csi-proxmox
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: proxmox-csi-plugin
+      version: "0.5.12"
+      sourceRef:
+        kind: HelmRepository
+        name: proxmox-csi
+        namespace: flux-system
+  values:
+    existingConfigSecret: proxmox-csi-plugin
+    existingConfigSecretKey: config.yaml
+    storageClass:
+      - name: ssd-storage
+        storage: local-data
+        reclaimPolicy: Delete
+        fstype: ext4
+        ssd: true
+        cache: none
+        mountOptions:
+          - noatime
+        annotations:
+          storageclass.kubernetes.io/is-default-class: "true"

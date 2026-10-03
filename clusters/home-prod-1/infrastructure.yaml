@@ -49,42 +49,12 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: rook-ceph-base
-  namespace: flux-system
-spec:
-  path: ./infrastructure/rook-ceph
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  interval: 10m
-  prune: true
-  wait: true
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: rook-ceph
+  name: proxmox-csi
   namespace: flux-system
 spec:
   dependsOn:
-    - name: rook-ceph-base
-  path: ./infrastructure/rook-ceph/operator
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  interval: 10m
-  prune: true
-  wait: true
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: rook-ceph-cluster
-  namespace: flux-system
-spec:
-  dependsOn:
-    - name: rook-ceph
-  path: ./infrastructure/rook-ceph/cluster
+    - name: sources
+  path: ./infrastructure/proxmox-csi
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -100,7 +70,7 @@ metadata:
 spec:
   dependsOn:
     - name: sources
-    - name: rook-ceph
+    - name: proxmox-csi
   path: ./infrastructure/vault
   sourceRef:
     kind: GitRepository

@@ -10,11 +10,12 @@ spec:
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: rook-release
+  name: proxmox-csi
   namespace: flux-system
 spec:
+  type: oci
   interval: 1h
-  url: https://charts.rook.io/release
+  url: oci://ghcr.io/sergelogvinov/charts
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository

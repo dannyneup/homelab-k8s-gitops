@@ -1,0 +1,67 @@
+apiVersion: vault.banzaicloud.com/v1alpha1
+kind: Vault
+metadata:
+  name: vault
+  namespace: vault
+spec:
+  size: 3
+  image: hashicorp/vault:2.0.4
+  serviceAccount: vault
+  podAntiAffinity: kubernetes.io/hostname
+  serviceRegistrationEnabled: true
+  skipVaultContainerCapabilities: true
+
+  volumeClaimTemplates:
+    - metadata:
+        name: vault-raft
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Gi
+  volumeMounts:
+    - name: vault-raft
+      mountPath: /vault/file
+
+  # bank-vaults initializes vault and unseals every pod with the keys stored in this secret namespace
+  unsealConfig:
+    kubernetes:
+      secretNamespace: vault
+
+  ingress:
+    spec:
+      ingressClassName: traefik
+      rules:
+        - host: secrets.neupauer.tech
+          http:
+            paths:
+              - path: /
+                pathType: Prefix
+                backend:
+                  service:
+                    name: vault
+                    port:
+                      number: 8200
+
+  config:
+    ui: true
+    disable_mlock: true
+    storage:
+      raft:
+        path: /vault/file
+    listener:
+      tcp:
+        address: 0.0.0.0:8200
+        tls_disable: true
+    api_addr: http://vault.vault:8200
+    cluster_addr: "https://${.Env.POD_NAME}:8201"
+
+  externalConfig:
+    secrets:
+      - path: secret
+        type: kv
+        description: General secrets
+        options:
+          version: 2
+    auth:
+      - type: kubernetes

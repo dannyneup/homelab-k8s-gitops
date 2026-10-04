@@ -20,11 +20,12 @@ spec:
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: hashicorp
+  name: bank-vaults
   namespace: flux-system
 spec:
+  type: oci
   interval: 1h
-  url: https://helm.releases.hashicorp.com
+  url: oci://ghcr.io/bank-vaults/helm-charts
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository

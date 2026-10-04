@@ -65,12 +65,29 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: vault
+  name: vault-operator
   namespace: flux-system
 spec:
   dependsOn:
     - name: sources
+  path: ./infrastructure/vault-operator
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  interval: 10m
+  prune: true
+  wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: vault
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: vault-operator
     - name: proxmox-csi
+    - name: traefik
   path: ./infrastructure/vault
   sourceRef:
     kind: GitRepository

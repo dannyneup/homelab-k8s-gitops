@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: metallb
-      version: "0.15.3"
+      version: "0.16.1"
       sourceRef:
         kind: HelmRepository
         name: metallb
@@ -19,3 +19,6 @@ spec:
     speaker:
       frr:
         enabled: false
+    # L2 mode only, skip the frr-k8s BGP backend that is enabled by default since 0.16
+    frrk8s:
+      enabled: false

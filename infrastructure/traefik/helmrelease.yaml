@@ -55,8 +55,6 @@ spec:
         matchRule: Host(`traefik.home-prod-1.neupauer.tech`)
         entryPoints:
           - websecure
-        middlewares:
-          - name: lan-only
     providers:
       kubernetesIngress:
         enabled: true

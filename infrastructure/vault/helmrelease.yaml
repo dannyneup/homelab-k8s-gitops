@@ -13,6 +13,17 @@ spec:
         kind: HelmRepository
         name: hashicorp
         namespace: flux-system
+  # sealed/uninitialized vault pods are never ready, without this the PDB blocks every node drain (e.g. talos upgrades)
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: PodDisruptionBudget
+              name: vault
+            patch: |
+              - op: add
+                path: /spec/unhealthyPodEvictionPolicy
+                value: AlwaysAllow
   values:
     server:
       ha:

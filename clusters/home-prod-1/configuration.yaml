@@ -15,3 +15,19 @@ spec:
   interval: 10m
   prune: true
   wait: true
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cert-manager-configuration
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cert-manager
+  path: ./clusters/home-prod-1/configuration/infrastructure/cert-manager
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  interval: 10m
+  prune: true
+  wait: true

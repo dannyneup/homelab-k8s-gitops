@@ -35,3 +35,13 @@ metadata:
 spec:
   interval: 1h
   url: https://traefik.github.io/charts
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: jetstack
+  namespace: flux-system
+spec:
+  type: oci
+  interval: 1h
+  url: oci://quay.io/jetstack/charts

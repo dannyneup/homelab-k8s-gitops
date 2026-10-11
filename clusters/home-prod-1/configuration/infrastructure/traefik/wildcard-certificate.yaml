@@ -10,4 +10,5 @@ spec:
     kind: ClusterIssuer
     name: letsencrypt
   dnsNames:
+    - "*.home-prod-1.neupauer.tech"
     - "*.neupauer.tech"

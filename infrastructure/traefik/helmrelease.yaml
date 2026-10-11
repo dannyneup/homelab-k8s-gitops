@@ -69,3 +69,7 @@ spec:
       requests:
         cpu: 50m
         memory: 64Mi
+    tlsStore:
+      default:
+        defaultCertificate:
+          secretName: wildcard-tls
